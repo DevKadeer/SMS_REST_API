@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SMS_REST_API.DataAccess;
+using SMS_REST_API.Repositories;
 
 //using SMS_REST_API.DataAccess;
 
@@ -32,9 +33,10 @@ namespace SMS_REST_API
             services.AddControllers();
 
             services.AddCors();
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddDbContext<CityContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.AddTransient<ICityRepository, CityRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -8,141 +8,76 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SMS_REST_API.DataAccess;
 using SMS_REST_API.Models;
+using SMS_REST_API.Repositories;
 
 namespace SMS_REST_API.Controllers
 {
-    public class QueryParams
-    {
-
-    }
-
     [Route("api/[controller]")]
     [ApiController]
     public class CityController : ControllerBase
     {
         private readonly ILogger<CityController> _logger;
-        private readonly CityContext _context;
 
-        public CityController(ILogger<CityController> logger, CityContext context)
+        private readonly ICityRepository _cityRepository;
+        public CityController(ILogger<CityController> logger, ICityRepository cityRepository)
         {
             _logger = logger;
-            _context = context;
+            _cityRepository = cityRepository;
         }
-        //https://localhost:5001/api/city?validFilter=&sortOrder=asc&pageNumber=0&pageSize=3
-        // GET: api/CityModels
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CityModel>>> GetAll()
+        public async Task<ActionResult<IEnumerable<CityModel>>> GetAllCities()
         {
-            var totalRecords = await _context.CityDbSet.ToListAsync();
-            return Ok(new Response<List<CityModel>>(totalRecords));
+            var cities = await _cityRepository.GetCities();
+
+            return Ok(new Response<List<CityModel>>(cities));
         }
 
-        [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<CityModel>>> GetCities()
+        [HttpGet("GetFilteredCities")]
+        public async Task<ActionResult<IEnumerable<CityModel>>> GetFilteredCities([FromQuery] string filter, string sortOrder, int pageNumber = 1, int pageSize = 10)
         {
-            var totalRecords = await _context.CityDbSet.ToListAsync();
-            return Ok(new Response<List<CityModel>>(totalRecords));
-        }
-
-        [HttpGet("GetPaged")]
-        public async Task<ActionResult<IEnumerable<CityModel>>> GetPagedCities([FromQuery] string filter, string sortOrder, int pageNumber = 1, int pageSize = 10)
-        {
-            var validFilter = new PaginationFilter(pageNumber, pageSize);
-            var pagedData = await _context.CityDbSet
-                .Skip((pageNumber + 1 - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-
-            pagedData = sortOrder == "desc"
-                ? pagedData.OrderByDescending(x => x.Id).ToList()
-                : pagedData.OrderBy(x => x.Id).ToList();
-            return Ok(new PagedResponse<List<CityModel>>(pagedData, pageNumber, pageSize));
+            var cities = await _cityRepository.GetFilteredCities(filter, sortOrder, pageNumber, pageSize);
+            return Ok(new PagedResponse<List<CityModel>>(cities, pageNumber, pageSize));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CityModel>> GetCityModel(int id)
+        public async Task<ActionResult<CityModel>> GetCity(int id)
         {
-            var cityModel = await _context.CityDbSet.FindAsync(id);
+            var city = await _cityRepository.GetCity(id);
 
-            if (cityModel == null)
-            {
+            if (city == null)
                 return NotFound();
-            }
 
-            return cityModel;
+            return city;
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCityModel(int id, CityModel cityModel)
+        public async Task<IActionResult> UpdateCity(int id, CityModel cityModel)
         {
             if (id != cityModel.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cityModel).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CityModelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var res = await _cityRepository.UpdateCity(cityModel);
+            return Ok(new Response<RepoResponse>(res));
         }
 
         [HttpPost]
-        public async Task<ActionResult<CityModel>> PostCityModel(CityModel cityModel)
+        public async Task<ActionResult<CityModel>> AddCity(CityModel cityModel)
         {
-            _context.CityDbSet.Add(cityModel);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (CityModelExists(cityModel.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var res = await _cityRepository.AddCity(cityModel);
 
-            return CreatedAtAction("GetCityModel", new { id = cityModel.Id }, cityModel);
+            return Ok(new Response<RepoResponse>(res));
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<CityModel>> DeleteCityModel(int id)
+        public async Task<ActionResult<CityModel>> DeleteCity(int id)
         {
-            var cityModel = await _context.CityDbSet.FindAsync(id);
-            if (cityModel == null)
-            {
-                return NotFound();
-            }
+            var res = await _cityRepository.DeleteCity(id);
 
-            _context.CityDbSet.Remove(cityModel);
-            await _context.SaveChangesAsync();
-
-            return cityModel;
+            return Ok(new Response<RepoResponse>(res));
         }
 
-        private bool CityModelExists(int id)
-        {
-            return _context.CityDbSet.Any(e => e.Id == id);
-        }
     }
 }
