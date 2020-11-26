@@ -12,6 +12,7 @@
     <WebStackScaffolding_DbContextTypeFullName>SMS_REST_API.DataAccess.CityContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <ShowAllFiles>false</ShowAllFiles>
+    <NameOfLastUsedPublishProfile>registry.hub.docker.com_devKadeer</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

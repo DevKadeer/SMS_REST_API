@@ -151,6 +151,13 @@ C:\Code\Learning\SMS Coding\SMS_REST_API\bin\Debug\netcoreapp3.1\ru\Microsoft.Co
 C:\Code\Learning\SMS Coding\SMS_REST_API\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Code\Learning\SMS Coding\SMS_REST_API\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Code\Learning\SMS Coding\SMS_REST_API\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Code\Learning\SMS Coding\SMS_REST_API\obj\Debug\netcoreapp3.1\SMS_REST_API.csproj.CoreCompileInputs.cache
-C:\Code\Learning\SMS Coding\SMS_REST_API\obj\Debug\netcoreapp3.1\SMS_REST_API.MvcApplicationPartsAssemblyInfo.cache
 C:\Code\Learning\SMS Coding\SMS_REST_API\bin\Debug\netcoreapp3.1\data.json
+C:\Code\Learning\SMS Coding\SMS_REST_API\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+C:\Code\Learning\SMS Coding\SMS_REST_API\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\Code\Learning\SMS Coding\SMS_REST_API\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Code\Learning\SMS Coding\SMS_REST_API\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Code\Learning\SMS Coding\SMS_REST_API\obj\Debug\netcoreapp3.1\SMS_REST_API.csproj.CoreCompileInputs.cache
+C:\Code\Learning\SMS Coding\SMS_REST_API\obj\Debug\netcoreapp3.1\SMS_REST_API.MvcApplicationPartsAssemblyInfo.cs
+C:\Code\Learning\SMS Coding\SMS_REST_API\obj\Debug\netcoreapp3.1\SMS_REST_API.MvcApplicationPartsAssemblyInfo.cache
+C:\Code\Learning\SMS Coding\SMS_REST_API\bin\Debug\netcoreapp3.1\SMS_REST_API.xml
+C:\Code\Learning\SMS Coding\SMS_REST_API\obj\Debug\netcoreapp3.1\SMS_REST_API.xml
